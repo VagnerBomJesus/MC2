@@ -33,11 +33,15 @@ class column(ui.column):
     def move_card(self) -> None:
         global dragged  # pylint: disable=global-statement # noqa: PLW0603
         self.unhighlight()
-        dragged.parent_slot.parent.remove(dragged)
-        with self:
-            card(dragged.item)
-        self.on_drop(dragged.item, self.name)
-        dragged = None
+        if dragged is not None:
+            from_column_name = dragged.parent_slot.parent.name
+            to_column_name = self.name
+            dragged.parent_slot.parent.remove(dragged)
+            with self:
+                card(dragged.item)
+            self.on_drop(dragged.item, self.name)
+            print(f'Card "{dragged.item.title}" moved from {from_column_name} to {to_column_name}')
+            dragged = None
 
 
 class card(ui.card):

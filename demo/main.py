@@ -5,20 +5,15 @@ import draganddrop as dnd
 
 from nicegui import ui
 
-obj_status = [
-    [
-        {"col": "Devices", "todos": ["Device1", "Device2"]},
-        {"col": "Functions", "todos": ["=", ">", "<", "=>", "=<"]},
-        {"col": "Actions", "todos": ["alert", "trigger valve", "something else?"]},
-    ],
-    [
-        {"col": "Sensor", "todos": []},
-        {"col": "Sensor Data", "todos": []},
-        {"col": "Function", "todos": []},
-        {"col": "Action", "todos": []},
-    ],
-]
+import json
 
+import tools.file as file
+
+filename = "demo/tools/obj_status.json"
+
+str_obj_status = file.read_from_file(filename)
+
+obj_status = json.loads(str_obj_status)
 
 @dataclass
 class ToDo:
@@ -40,6 +35,8 @@ for row_index in obj_status:
                 else:
                     print(f'No todos in {status["col"]}')
     
+
+
 
 '''with ui.row():
     with dnd.column('Devices', on_drop=handle_drop):

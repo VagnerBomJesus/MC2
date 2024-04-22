@@ -1,1 +1,10 @@
+# Byte-compiled / optimized / DLL files #
+######################
+__pycache__/
+/__pycache__/
+demo/__pycache__/
+# OS generated files #
+######################
 .DS_Store
+.DS_Store?
+

@@ -1,0 +1,13 @@
+[
+    [
+        {"col": "Devices", "todos": ["Device1", "Device2"]},
+        {"col": "Functions", "todos": ["=", ">", "<", "=>", "=<"]},
+        {"col": "Actions", "todos": ["alert", "trigger valve", "something else?"]}
+    ],
+    [
+        {"col": "Sensor", "todos": []},
+        {"col": "Sensor Data", "todos": []},
+        {"col": "Function", "todos": []},
+        {"col": "Action", "todos": []}
+    ]
+]

@@ -50,6 +50,17 @@ class column(ui.column):
     def move_card(self) -> None:
         global dragged  # pylint: disable=global-statement # noqa: PLW0603
         self.unhighlight()
+
+        from_column = dragged.parent_slot.parent.name
+        to_column = self.name
+
+        # Save to database
+        conn = sqlite3.connect('dragdrop.db')
+        c = conn.cursor()
+        c.execute('insert into actions (item_title, from_column, to_column) values (?,?,?)', (dragged.item.title, from_column, to_column)) 
+        conn.commit()
+        conn.close()
+
         dragged.parent_slot.parent.remove(dragged)
         with self:
             card(dragged.item)

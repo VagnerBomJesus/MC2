@@ -4,6 +4,8 @@ from typing import Callable, Optional, Protocol
 
 from nicegui import ui
 
+import sqlite3
+
 
 class Item(Protocol):
     title: str
@@ -11,6 +13,21 @@ class Item(Protocol):
 
 dragged: Optional[card] = None
 
+def initialize_db():
+    conn = sqlite3.connect('dragdrop.db')
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS actions (
+            id INTEGER PRIMARY KEY,
+            item_title TEXT,
+            from_column TEXT,
+            to_column TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+initialize_db()
 
 class column(ui.column):
 

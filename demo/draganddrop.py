@@ -4,12 +4,6 @@ from typing import Callable, Optional, Protocol
 
 from nicegui import ui
 
-import json
-
-import tools.file as file
-
-filename = "demo/tools/obj_status.json"
-
 
 class Item(Protocol):
     title: str
@@ -39,40 +33,11 @@ class column(ui.column):
     def move_card(self) -> None:
         global dragged  # pylint: disable=global-statement # noqa: PLW0603
         self.unhighlight()
-        if dragged is not None:
-            from_column_name = dragged.parent_slot.parent.name
-            to_column_name = self.name
-            dragged.parent_slot.parent.remove(dragged)
-            with self:
-                card(dragged.item)
-            self.on_drop(dragged.item, self.name)
-            card_name = dragged.item.title
-            print(f'Card "{card_name}" moved from {from_column_name} to {to_column_name}')
-            dragged = None
-
-            # str todo
-            str_obj_status = file.read_from_file(filename)
-            obj_status = json.loads(str_obj_status)
-
-            # 1- remove card from old column object.json
-            for row_index in obj_status:
-                for status  in row_index:
-                    if status["col"] == from_column_name:
-                        todos = status["todos"]
-                        index = todos.index(card_name)
-                        todos.pop(index)
-
-            
-            # 2- add card to new column object.json
-            
-            for row_index in obj_status:
-                for status  in row_index:
-                    if status["col"] == to_column_name:
-                        todos = status["todos"]
-                        todos.append(card_name)
-
-            # 3- update object.json
-            file.write_to_file(filename, json.dumps(obj_status, indent=4))
+        dragged.parent_slot.parent.remove(dragged)
+        with self:
+            card(dragged.item)
+        self.on_drop(dragged.item, self.name)
+        dragged = None
 
 
 class card(ui.card):

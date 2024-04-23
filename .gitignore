@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files #
-######################
+#########################################
 __pycache__/
 /__pycache__/
 demo/__pycache__/
@@ -7,4 +7,9 @@ demo/__pycache__/
 ######################
 .DS_Store
 .DS_Store?
+
+# Ignore the default SQLite database #
+######################################
+/db/*.sqlite3
+/db/*.db
 
